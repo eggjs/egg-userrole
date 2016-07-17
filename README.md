@@ -36,8 +36,9 @@ exports.userrole = {
 };
 ```
 
-Recommend to use along with custom `userservice` plugin (which provide `ctx.user`).
-see [`egg-userservice`](https://github.com/eggjs/egg-userservice) for more info.
+> Recommend to use along with custom `userservice` plugin (which provide `ctx.user`).
+>
+> see [`egg-userservice`](https://github.com/eggjs/egg-userservice) for more info.
 
 ### Build-in
 
