@@ -40,7 +40,7 @@ describe('test/lib/plugins/userrole.test.js', () => {
     .expect(200, done);
   });
 
-  it.only('should GET /user 403 when user not login', done => {
+  it('should GET /user 403 when user not login', done => {
     app.mockContext({
       user: null,
     });
