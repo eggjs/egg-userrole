@@ -28,7 +28,9 @@ module.exports = {
       });
 
       // 加载 role.js 配置
-      this.loader.loadDirs().forEach(dir => this.loader.loadFile(path.join(dir, 'config/role.js')));
+      this.loader.getLoadUnits().forEach(unit => (
+        this.loader.loadFile(path.join(unit.path, 'config/role.js'))
+      ));
     }
     return this[ROLE];
   },
