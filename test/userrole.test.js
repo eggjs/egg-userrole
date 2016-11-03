@@ -2,80 +2,76 @@
 
 const request = require('supertest');
 const mm = require('egg-mock');
+const path = require('path');
 
 describe('test/lib/plugins/userrole.test.js', () => {
   let app;
-  before(done => {
+  before(() => {
     app = mm.app({
       baseDir: 'userrole',
-      plugin: true,
+      customEgg: path.join(__dirname, '../node_modules/egg'),
     });
-    app.ready(done);
+    return app.ready();
   });
 
   afterEach(mm.restore);
 
-  it('should GET /user 200 when user login', done => {
+  it('should GET /user 200 when user login', () => {
     app.mockContext({
       user: {
         name: 'user2',
       },
     });
-    request(app.callback())
+    return request(app.callback())
     .get('/user?name=user2')
-    .expect('hello user2')
-    .expect(200, done);
+    .expect(200, 'hello user2');
   });
 
-  it('should GET /admin 200 when admin login', done => {
+  it('should GET /admin 200 when admin login', () => {
     app.mockContext({
       user: {
         name: 'suqian.yf',
         isAdmin: true,
       },
     });
-    request(app.callback())
+    return request(app.callback())
     .get('/admin?name=suqian.yf')
-    .expect('hello admin')
-    .expect(200, done);
+    .expect(200, 'hello admin');
   });
 
-  it('should GET /user 403 when user not login', done => {
+  it('should GET /user 403 when user not login', () => {
     app.mockContext({
       user: null,
     });
-    request(app.callback())
+    return request(app.callback())
     .get('/user')
-    .expect('Forbidden, required role: user')
-    .expect(403, done);
+    .expect(403, 'Forbidden, required role: user');
   });
 
-  it('should GET /admin 403 when user is not admin', done => {
+  it('should GET /admin 403 when user is not admin', () => {
     app.mockContext({
       user: {
         name: 'user2',
       },
     });
-    request(app.callback())
+    return request(app.callback())
     .get('/admin?name=user2')
-    .expect('Forbidden, required role: admin')
-    .expect(403, done);
+    .expect(403, 'Forbidden, required role: admin');
   });
 
-  it('should get 403 json format', done => {
+  it('should get 403 json format', () => {
     app.mockContext({
       user: {
         name: 'user2',
       },
     });
-    request(app.callback())
+    return request(app.callback())
     .get('/admin?name=user2&ctoken=foo')
     .set('X-Requested-With', 'XMLHttpRequest')
     .set('Cookie', 'ctoken=foo')
-    .expect({
+    .expect(403, {
       message: 'Forbidden, required role: admin',
       stat: 'deny',
-    })
-    .expect(403, done);
+    });
   });
 });
