@@ -47,7 +47,7 @@ exports.userrole = {
 ```javascript
 function failureHandler(action) {
   const message = 'Forbidden, required role: ' + action;
-  if (this.isAjax) {
+  if (this.acceptJSON) {
     this.body = {
       message: message,
       stat: 'deny',
@@ -69,18 +69,22 @@ app.role.use('user', function() {
 
 ### How to custom `failureHandler`
 
+Define `app.role.failureHandler(action)` method in `config/role.js`
+
+- `app/extend/context.js`
+
 ```javascript
-// config.default.js
-exports.userrole = {
-  failureHandler(action) {
+// {app_root}/config/role.js or {framework_root}/config/role.js
+module.exports = app => {
+  app.role.failureHandler = function(action) {
     if (this.isAjax) {
       this.body = { target: loginURL, stat: 'deny' };
     } else {
       this.realStatus = 200;
       this.redirect(loginURL);
     }
-  },
-};
+  };
+}
 ```
 
 ### How to custom role
