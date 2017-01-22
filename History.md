@@ -1,4 +1,9 @@
 
+1.1.0 / 2017-01-22
+==================
+
+  * refactor: move default failure handler into plugin (#6)
+
 1.0.0 / 2016-11-03
 ==================
 
