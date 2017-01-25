@@ -77,7 +77,7 @@ Define `app.role.failureHandler(action)` method in `config/role.js`
 // {app_root}/config/role.js or {framework_root}/config/role.js
 module.exports = app => {
   app.role.failureHandler = function(action) {
-    if (this.isAjax) {
+    if (this.acceptJSON) {
       this.body = { target: loginURL, stat: 'deny' };
     } else {
       this.realStatus = 200;
