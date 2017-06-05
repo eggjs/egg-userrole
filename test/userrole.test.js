@@ -1,6 +1,5 @@
 'use strict';
 
-const request = require('supertest');
 const mm = require('egg-mock');
 const path = require('path');
 
@@ -22,7 +21,7 @@ describe('test/lib/plugins/userrole.test.js', () => {
         name: 'user2',
       },
     });
-    return request(app.callback())
+    return app.httpRequest()
     .get('/user?name=user2')
     .expect(200, 'hello user2');
   });
@@ -34,7 +33,7 @@ describe('test/lib/plugins/userrole.test.js', () => {
         isAdmin: true,
       },
     });
-    return request(app.callback())
+    return app.httpRequest()
     .get('/admin?name=suqian.yf')
     .expect(200, 'hello admin');
   });
@@ -43,7 +42,7 @@ describe('test/lib/plugins/userrole.test.js', () => {
     app.mockContext({
       user: null,
     });
-    return request(app.callback())
+    return app.httpRequest()
     .get('/user')
     .expect(403, 'Forbidden, required role: user');
   });
@@ -54,7 +53,7 @@ describe('test/lib/plugins/userrole.test.js', () => {
         name: 'user2',
       },
     });
-    return request(app.callback())
+    return app.httpRequest()
     .get('/admin?name=user2')
     .expect(403, 'Forbidden, required role: admin');
   });
@@ -65,7 +64,7 @@ describe('test/lib/plugins/userrole.test.js', () => {
         name: 'user2',
       },
     });
-    return request(app.callback())
+    return app.httpRequest()
     .get('/admin?name=user2&ctoken=foo')
     .set('Accept', 'application/json')
     .set('Cookie', 'ctoken=foo')
@@ -79,7 +78,7 @@ describe('test/lib/plugins/userrole.test.js', () => {
     app.mockContext({
       user: null,
     });
-    return request(app.callback())
+    return app.httpRequest()
     .get('/user.json')
     .expect(403, {
       message: 'Forbidden, required role: user',
@@ -95,7 +94,7 @@ describe('test/lib/plugins/userrole.test.js', () => {
     app.mockContext({
       user: null,
     });
-    return request(app.callback())
+    return app.httpRequest()
     .get('/user.json')
     .expect(403, {
       message: 'Permission denied, required role: user',
