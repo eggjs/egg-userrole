@@ -22,8 +22,8 @@ describe('test/lib/plugins/userrole.test.js', () => {
       },
     });
     return app.httpRequest()
-    .get('/user?name=user2')
-    .expect(200, 'hello user2');
+      .get('/user?name=user2')
+      .expect(200, 'hello user2');
   });
 
   it('should GET /admin 200 when admin login', () => {
@@ -34,8 +34,8 @@ describe('test/lib/plugins/userrole.test.js', () => {
       },
     });
     return app.httpRequest()
-    .get('/admin?name=suqian.yf')
-    .expect(200, 'hello admin');
+      .get('/admin?name=suqian.yf')
+      .expect(200, 'hello admin');
   });
 
   it('should GET /user 403 when user not login', () => {
@@ -43,8 +43,8 @@ describe('test/lib/plugins/userrole.test.js', () => {
       user: null,
     });
     return app.httpRequest()
-    .get('/user')
-    .expect(403, 'Forbidden, required role: user');
+      .get('/user')
+      .expect(403, 'Forbidden, required role: user');
   });
 
   it('should GET /admin 403 when user is not admin', () => {
@@ -54,8 +54,8 @@ describe('test/lib/plugins/userrole.test.js', () => {
       },
     });
     return app.httpRequest()
-    .get('/admin?name=user2')
-    .expect(403, 'Forbidden, required role: admin');
+      .get('/admin?name=user2')
+      .expect(403, 'Forbidden, required role: admin');
   });
 
   it('should get 403 with json format when accept json', () => {
@@ -65,13 +65,13 @@ describe('test/lib/plugins/userrole.test.js', () => {
       },
     });
     return app.httpRequest()
-    .get('/admin?name=user2&ctoken=foo')
-    .set('Accept', 'application/json')
-    .set('Cookie', 'ctoken=foo')
-    .expect(403, {
-      message: 'Forbidden, required role: admin',
-      stat: 'deny',
-    });
+      .get('/admin?name=user2&ctoken=foo')
+      .set('Accept', 'application/json')
+      .set('Cookie', 'ctoken=foo')
+      .expect(403, {
+        message: 'Forbidden, required role: admin',
+        stat: 'deny',
+      });
   });
 
   it('should get 403 with json format when endsWith json', () => {
@@ -79,25 +79,25 @@ describe('test/lib/plugins/userrole.test.js', () => {
       user: null,
     });
     return app.httpRequest()
-    .get('/user.json')
-    .expect(403, {
-      message: 'Forbidden, required role: user',
-      stat: 'deny',
-    });
+      .get('/user.json')
+      .expect(403, {
+        message: 'Forbidden, required role: user',
+        stat: 'deny',
+      });
   });
 
   it('should get 403 with json format and custom failureHandler', () => {
-    mm(app.role, 'failureHandler', function(action) {
-      this.status = 403;
-      this.body = { message: `Permission denied, required role: ${action}` };
+    mm(app.role, 'failureHandler', (ctx, action) => {
+      ctx.status = 403;
+      ctx.body = { message: `Permission denied, required role: ${action}` };
     });
     app.mockContext({
       user: null,
     });
     return app.httpRequest()
-    .get('/user.json')
-    .expect(403, {
-      message: 'Permission denied, required role: user',
-    });
+      .get('/user.json')
+      .expect(403, {
+        message: 'Permission denied, required role: user',
+      });
   });
 });

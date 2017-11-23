@@ -15,19 +15,19 @@
     "app.js"
   ],
   "dependencies": {
-    "koa-roles": "^1.0.3"
+    "koa-roles": "^2.0.0"
   },
   "devDependencies": {
-    "autod": "^2.8.0",
-    "egg": "^1.4.0",
-    "egg-bin": "^3.4.2",
-    "egg-ci": "^1.7.0",
-    "egg-mock": "^3.7.1",
-    "eslint": "^3.19.0",
-    "eslint-config-egg": "^4.2.0"
+    "autod": "^3.0.1",
+    "egg": "^2.0.0",
+    "egg-bin": "^4.3.5",
+    "egg-ci": "^1.8.0",
+    "egg-mock": "^3.13.1",
+    "eslint": "^4.11.0",
+    "eslint-config-egg": "^5.1.1"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "scripts": {
     "test": "npm run lint -- --fix && npm run test-local",
@@ -38,7 +38,7 @@
     "autod": "autod"
   },
   "ci": {
-    "version": "6, 7"
+    "version": "8, 9"
   },
   "repository": {
     "type": "git",

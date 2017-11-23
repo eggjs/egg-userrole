@@ -45,16 +45,16 @@ exports.userrole = {
 `Roles` build-in `failureHandler`:
 
 ```javascript
-function failureHandler(action) {
+function failureHandler(ctx, action) {
   const message = 'Forbidden, required role: ' + action;
-  if (this.acceptJSON) {
-    this.body = {
+  if (ctx.acceptJSON) {
+    ctx.body = {
       message: message,
       stat: 'deny',
     };
   } else {
-    this.status = 403;
-    this.body = message;
+    ctx.status = 403;
+    ctx.body = message;
   }
 };
 ```
@@ -62,9 +62,7 @@ function failureHandler(action) {
 Build-in `user` role define:
 
 ```javascript
-app.role.use('user', function() {
-  return !!this.user;
-});
+app.role.use('user', ctx => !!ctx.user);
 ```
 
 ### How to custom `failureHandler`
@@ -76,12 +74,12 @@ Define `app.role.failureHandler(action)` method in `config/role.js`
 ```javascript
 // {app_root}/config/role.js or {framework_root}/config/role.js
 module.exports = app => {
-  app.role.failureHandler = function(action) {
-    if (this.acceptJSON) {
-      this.body = { target: loginURL, stat: 'deny' };
+  app.role.failureHandler = function(ctx, action) {
+    if (ctx.acceptJSON) {
+      ctx.body = { target: loginURL, stat: 'deny' };
     } else {
-      this.realStatus = 200;
-      this.redirect(loginURL);
+      ctx.realStatus = 200;
+      ctx.redirect(loginURL);
     }
   };
 }
@@ -92,8 +90,13 @@ module.exports = app => {
 ```javascript
 // {app_root}/config/role.js or {framework_root}/config/role.js
 module.exports = function(app) {
-  app.role.use('admin', function() {
-    return this.user && this.user.isAdmin;
+  app.role.use('admin', ctx => {
+    return ctx.user && ctx.user.isAdmin;
+  });
+
+  app.role.use('can write', async ctx => {
+    const post = await ctx.service.post.fetch(ctx.request.body.id);
+    return ctx.user.name === post.author;
   });
 };
 ```
@@ -105,4 +108,3 @@ Please open an issue [here](https://github.com/eggjs/egg/issues).
 ## License
 
 [MIT](https://github.com/eggjs/egg-userrole/blob/master/LICENSE)
-

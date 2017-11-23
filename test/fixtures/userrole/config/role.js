@@ -1,7 +1,5 @@
 'use strict';
 
 module.exports = function(app) {
-  app.role.use('admin', function() {
-    return this.user && this.user.isAdmin;
-  });
+  app.role.use('admin', ctx => ctx.user && ctx.user.isAdmin);
 };

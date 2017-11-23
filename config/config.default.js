@@ -1,11 +1,11 @@
 'use strict';
 
 exports.userrole = {
-  failureHandler(action) {
-    if (this.roleFailureHandler) {
-      return this.roleFailureHandler(action);
+  failureHandler(ctx, action) {
+    if (ctx.roleFailureHandler) {
+      return ctx.roleFailureHandler(action);
     }
-    defaultFailureHandler(this, action);
+    defaultFailureHandler(ctx, action);
   },
 };
 
