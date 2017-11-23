@@ -1,6 +1,6 @@
 {
   "name": "egg-userrole",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "description": "user role plugin for egg",
   "eggPlugin": {
     "name": "userrole"

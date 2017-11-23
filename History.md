@@ -1,4 +1,10 @@
 
+2.0.0 / 2017-11-23
+==================
+
+**others**
+  * [[`1919cc1`](http://github.com/eggjs/egg-userrole/commit/1919cc1551da4e762697de6fc62fc32b38220c44)] - refactor: use async function and support egg@2 (#9) (Yiyu He <<dead_horse@qq.com>>)
+
 1.1.2 / 2017-06-06
 ==================
 
