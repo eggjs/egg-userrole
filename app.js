@@ -19,7 +19,7 @@ module.exports = app => {
 
   app.role = new Roles(app.config.userrole);
   // load config from `role.js`
-  app.loader.getLoadUnits().forEach(unit => (
-    app.loader.loadFile(path.join(unit.path, 'config/role.js'))
-  ));
+  app.loader.getLoadUnits().forEach(unit => {
+    app.loader.loadFile(path.join(unit.path, 'config/role'));
+  });
 };

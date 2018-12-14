@@ -21,7 +21,7 @@
     "autod": "^3.0.1",
     "egg": "^2.0.0",
     "egg-bin": "^4.3.5",
-    "egg-ci": "^1.8.0",
+    "egg-ci": "^1.10.0",
     "egg-mock": "^3.13.1",
     "eslint": "^4.11.0",
     "eslint-config-egg": "^5.1.1"
@@ -38,7 +38,7 @@
     "autod": "autod"
   },
   "ci": {
-    "version": "8, 9"
+    "version": "8, 10"
   },
   "repository": {
     "type": "git",
